@@ -1,0 +1,197 @@
+{
+  "metadata": {
+    "schemaVersion": "1.0",
+    "importType": "LEX",
+    "importFormat": "JSON"
+  },
+  "resource": {
+    "name": "RoboAdvisor",
+    "version": "1",
+    "intents": [
+      {
+        "rejectionStatement": {
+          "messages": [
+            {
+              "contentType": "PlainText",
+              "content": "I will be pleased to assist you in the future."
+            }
+          ]
+        },
+        "name": "RecommendPortfolio",
+        "version": "6",
+        "fulfillmentActivity": {
+          "codeHook": {
+            "uri": "arn:aws:lambda:us-west-2:317103071233:function:RecommendPortfolio",
+            "messageVersion": "1.0"
+          },
+          "type": "CodeHook"
+        },
+        "sampleUtterances": [
+          "I want to save money for my retirement",
+          "I'm {age} and I would like to invest for my retirement",
+          "I'm {age} and I want to invest for my retirement",
+          "I want the best option to invest for my retirement",
+          "I'm worried about my retirement",
+          "I want to invest for my retirement",
+          "I would like to invest for my retirement"
+        ],
+        "slots": [
+          {
+            "sampleUtterances": [],
+            "slotType": "AMAZON.NUMBER",
+            "obfuscationSetting": "NONE",
+            "slotConstraint": "Required",
+            "valueElicitationPrompt": {
+              "messages": [
+                {
+                  "contentType": "PlainText",
+                  "content": "How old are you?"
+                }
+              ],
+              "maxAttempts": 2
+            },
+            "priority": 2,
+            "name": "age"
+          },
+          {
+            "sampleUtterances": [],
+            "slotType": "AMAZON.FirstName",
+            "obfuscationSetting": "NONE",
+            "slotConstraint": "Required",
+            "valueElicitationPrompt": {
+              "messages": [
+                {
+                  "contentType": "PlainText",
+                  "content": "Thank you for trusting me to help, could you please give me your name?"
+                }
+              ],
+              "maxAttempts": 2
+            },
+            "priority": 1,
+            "name": "firstName"
+          },
+          {
+            "sampleUtterances": [],
+            "slotType": "AMAZON.NUMBER",
+            "obfuscationSetting": "NONE",
+            "slotConstraint": "Required",
+            "valueElicitationPrompt": {
+              "messages": [
+                {
+                  "contentType": "PlainText",
+                  "content": "How much do you want to invest?"
+                }
+              ],
+              "maxAttempts": 2
+            },
+            "priority": 3,
+            "name": "investmentAmount"
+          },
+          {
+            "sampleUtterances": [],
+            "slotType": "RiskLevel_",
+            "slotTypeVersion": "1",
+            "obfuscationSetting": "NONE",
+            "slotConstraint": "Required",
+            "valueElicitationPrompt": {
+              "messages": [
+                {
+                  "contentType": "PlainText",
+                  "content": "Please select a risk level suitable for you {firstName}"
+                }
+              ],
+              "responseCard": "{\"version\":1,\"contentType\":\"application/vnd.amazonaws.card.generic\",\"genericAttachments\":[{\"imageUrl\":\"https://cdn4.iconfinder.com/data/icons/emoji-line-doodle/91/Emoji_LIne_Doodle_C-21-512.png\",\"subTitle\":\"No risk at all? Safe and easy.\",\"title\":\"None\",\"buttons\":[{\"text\":\"None\",\"value\":\"None\"}]},{\"imageUrl\":\"https://cdn4.iconfinder.com/data/icons/emoji-line-doodle/91/Emoji_LIne_Doodle_C-03-512.png\",\"subTitle\":\"What could possibly go wrong?\",\"title\":\"Very Low or Low\",\"buttons\":[{\"text\":\"Very Low\",\"value\":\"Very Low\"},{\"text\":\"Low\",\"value\":\"Low\"}]},{\"imageUrl\":\"https://cdn4.iconfinder.com/data/icons/emoji-line-doodle/91/Emoji_LIne_Doodle_C-14-512.png\",\"subTitle\":\"It's all about the balance\",\"title\":\"Medium\",\"buttons\":[{\"text\":\"Medium\",\"value\":\"Medium\"}]},{\"imageUrl\":\"https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Edvard_Munch%2C_1893%2C_The_Scream%2C_oil%2C_tempera_and_pastel_on_cardboard%2C_91_x_73_cm%2C_National_Gallery_of_Norway.jpg/1200px-Edvard_Munch%2C_1893%2C_The_Scream%2C_oil%2C_tempera_and_pastel_on_cardboard%2C_91_x_73_cm%2C_National_Gallery_of_Norway.jpg\",\"subTitle\":\"What could possibly go wrong?\",\"title\":\"High or Very High\",\"buttons\":[{\"text\":\"High\",\"value\":\"High\"},{\"text\":\"Very High\",\"value\":\"Very High\"}]}]}",
+              "maxAttempts": 2
+            },
+            "priority": 4,
+            "defaultValueSpec": {
+              "defaultValueList": []
+            },
+            "name": "riskLevel"
+          }
+        ],
+        "confirmationPrompt": {
+          "messages": [
+            {
+              "contentType": "PlainText",
+              "content": "Would you like me to search for the best investment portfolio for you now?"
+            }
+          ],
+          "maxAttempts": 3
+        },
+        "dialogCodeHook": {
+          "uri": "arn:aws:lambda:us-west-2:317103071233:function:RecommendPortfolio",
+          "messageVersion": "1.0"
+        }
+      }
+    ],
+    "slotTypes": [
+      {
+        "name": "RiskLevel_",
+        "version": "1",
+        "enumerationValues": [
+          {
+            "value": "High",
+            "synonyms": [
+              "High"
+            ]
+          },
+          {
+            "value": "Very Low",
+            "synonyms": [
+              "Very Low"
+            ]
+          },
+          {
+            "value": "Low",
+            "synonyms": [
+              "Low"
+            ]
+          },
+          {
+            "value": "Very High",
+            "synonyms": [
+              "Very High"
+            ]
+          },
+          {
+            "value": "Medium",
+            "synonyms": [
+              "Medium"
+            ]
+          },
+          {
+            "value": "None",
+            "synonyms": [
+              "None"
+            ]
+          }
+        ],
+        "valueSelectionStrategy": "TOP_RESOLUTION"
+      }
+    ],
+    "voiceId": "Nicole",
+    "childDirected": false,
+    "locale": "en-AU",
+    "idleSessionTTLInSeconds": 300,
+    "clarificationPrompt": {
+      "messages": [
+        {
+          "contentType": "PlainText",
+          "content": "Sorry, can you please repeat that?"
+        }
+      ],
+      "maxAttempts": 5
+    },
+    "abortStatement": {
+      "messages": [
+        {
+          "contentType": "PlainText",
+          "content": "Sorry, I could not understand. Goodbye."
+        }
+      ]
+    },
+    "detectSentiment": false,
+    "enableModelImprovements": true
+  }
+}
